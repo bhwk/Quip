@@ -11,6 +11,7 @@
 	import TextInput from '../../components/TextInput/TextInput.svelte';
 
 	let hasStarted = false;
+	let currentScreen = 'lobby';
 
 	export let data;
 
@@ -57,7 +58,7 @@
 	const startGame = (e) => {
 		// placeholder to switch views
 		e.preventDefault();
-		hasStarted = true;
+		currentScreen = 'game';
 	};
 
 	const getPlayers = (e) => {
@@ -66,7 +67,7 @@
 	};
 </script>
 
-{#if !hasStarted}
+{#if currentScreen === 'game'}
 	<div class="flex flex-row justify-evenly" transition:fade>
 		<Logo class="absolute top-14 left-10 text-6xl px-8 pb-6 pt-2" />
 		<div class="flex flex-col">
@@ -179,7 +180,7 @@
 			/>
 		</div>
 	</div>
-{:else}
+{:else if currentScreen === 'lobby'}
 	<div class="flex flex-col items-center flex-1 p-4 box-border gap-4">
 		<div class="text-center flex flex-col gap-2">
 			<Logo class="text-3xl px-4 py-2 pb-4" logoText={lobbyCode} />
