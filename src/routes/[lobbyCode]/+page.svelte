@@ -48,11 +48,6 @@
 		e.preventDefault();
 		currentScreen = 'game';
 	};
-
-	const getPlayers = (e) => {
-		e.preventDefault();
-		console.log('debug', lobbyDetails);
-	};
 </script>
 
 {#if currentScreen === 'game'}
