@@ -1,6 +1,9 @@
 <script>
 	let inputClass;
+
 	export { inputClass as class };
+
+	export let logoText;
 </script>
 
 <div class="flex items-center">
@@ -9,6 +12,6 @@
 			inputClass || ''
 		}`}
 	>
-		Quip
+		{logoText || 'Quip'}
 	</div>
 </div>

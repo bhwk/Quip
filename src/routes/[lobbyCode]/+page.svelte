@@ -82,8 +82,7 @@
 {:else}
 	<div class="flex flex-col items-center flex-1 p-4 box-border gap-4">
 		<div class="text-center flex flex-col gap-2">
-			<span id="lobbyCode" class="border-2 border-black w-52">{lobbyCode}</span>
-			<Logo class="text-8xl px-8 pb-6 pt-2" />
+			<Logo class="text-3xl px-4 py-2 pb-4" logoText={lobbyCode} />
 		</div>
 		<div class="flex flex-col gap-2">
 			<ul id="playerList" class="border-2 border-black p-4 w-96">
