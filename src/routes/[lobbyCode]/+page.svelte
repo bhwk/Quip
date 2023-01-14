@@ -53,6 +53,8 @@
 			console.log(lobbyDetails);
 			console.log('getLobbyDetailsResponse', lobbyDetails);
 		});
+
+		socket.on('roundUpdate', (update) => {});
 	});
 
 	const startGame = (e) => {
