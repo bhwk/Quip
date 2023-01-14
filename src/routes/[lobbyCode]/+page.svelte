@@ -11,38 +11,49 @@
 
 	const lobbyCode = data.props.lobbyCode;
 	const username = data.props.username;
-	let lobbyDetails;
 
-	const socket = io('http://localhost:3000/', {
-		auth: {
-			username,
-			lobby: lobbyCode
-		}
-	});
-	setContext('socket', socket);
+	export let lobbyDetails = {};
 
-	socket.on('joinLobbyResponse', (res) => {
-		if (!res.success) {
-			// Redirect to home with message
-		}
-	});
+	let socket;
+	// setContext('socket', socket);
 
-	socket.on('userJoinLobby', () => {
-		//  when user joined
-		console.log('a user has joined the lobby lets request for data');
-		socket.emit('getLobbyDetailsRequest');
-	});
+	onMount(async () => {
+		socket = io('http://localhost:3000/', {
+			auth: {
+				username,
+				lobby: lobbyCode
+			}
+		});
 
-	socket.on('getLobbyDetailsResponse', (res) => {
-		// get players
-		lobbyDetails = res;
-		console.log(lobbyDetails);
+		socket.on('joinLobbyResponse', (res) => {
+			console.log('joined lobby succesfully');
+			if (!res.success) {
+				// Redirect to home with message
+			}
+		});
+
+		socket.on('userJoinLobby', () => {
+			//  when user joined
+			console.log('a user has joined the lobby lets request for data');
+			socket.emit('getLobbyDetailsRequest');
+		});
+
+		socket.on('getLobbyDetailsResponse', (res) => {
+			// get players
+			lobbyDetails = res;
+			console.log('getLobbyDetailsResponse', lobbyDetails);
+		});
 	});
 
 	const startGame = (e) => {
 		// placeholder to switch views
 		e.preventDefault();
 		hasStarted = true;
+	};
+
+	const getPlayers = (e) => {
+		e.preventDefault();
+		console.log('debug', lobbyDetails);
 	};
 </script>
 
@@ -76,7 +87,7 @@
 		</div>
 		<div class="flex flex-col gap-2">
 			<ul id="playerList" class="border-2 border-black p-4 w-96">
-				{#if lobbyDetails}
+				{#if lobbyDetails.players}
 					<label>test</label>
 					{#each lobbyDetails.players as playerName, i}
 						<li>{playerName}</li>
@@ -85,7 +96,7 @@
 			</ul>
 			<div class="flex gap-2">
 				<button class="border-2">START</button>
-				<a href="/" class="border-2">LEAVE</a>
+				<button on:click={getPlayers}>test</button>
 			</div>
 		</div>
 	</div>
