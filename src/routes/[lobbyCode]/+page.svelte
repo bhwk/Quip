@@ -67,28 +67,116 @@
 </script>
 
 {#if !hasStarted}
-	<div transition:fade>
-		<Logo class="absolute top-14 right-10 text-6xl px-8 pb-6 pt-2" />
+	<div class="flex flex-row justify-evenly" transition:fade>
+		<Logo class="absolute top-14 left-10 text-6xl px-8 pb-6 pt-2" />
 		<div class="flex flex-col">
-			<div class="flex flex-row mx-auto my-8">
-				<Tweet {username} />
+			<div
+				class="flex flex-col h-[800px] overflow-y-scroll w-fit py-8 px-16 mx-auto scroll-smooth scrollbar-hide rounded-lg shadow-lg mt-8 border-t"
+			>
+				<div class="flex flex-row mx-auto space-y-8">
+					<div class="flex flex-row bg-white p-8 shadow-lg border-t mt-8 rounded-lg">
+						<Tweet {username} />
 
-				<div class="flex flex-col my-auto w-16 space-y-2">
-					<div
-						class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
-					>
-						💩
+						<div class="flex flex-col my-auto w-16 space-y-2">
+							<div
+								class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
+							>
+								💩
+							</div>
+							<div
+								class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
+							>
+								🔥
+							</div>
+						</div>
 					</div>
-					<div
-						class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
-					>
-						🔥
+				</div>
+
+				<div class="flex flex-row mx-auto space-y-8">
+					<div class="flex flex-row bg-white p-8 shadow-lg border-t mt-8 rounded-lg">
+						<Tweet {username} />
+
+						<div class="flex flex-col my-auto w-16 space-y-2">
+							<div
+								class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
+							>
+								💩
+							</div>
+							<div
+								class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
+							>
+								🔥
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="flex flex-row mx-auto space-y-8">
+					<div class="flex flex-row bg-white p-8 shadow-lg border-t mt-8 rounded-lg">
+						<Tweet {username} />
+
+						<div class="flex flex-col my-auto w-16 space-y-2">
+							<div
+								class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
+							>
+								💩
+							</div>
+							<div
+								class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
+							>
+								🔥
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="flex flex-row mx-auto space-y-8">
+					<div class="flex flex-row bg-white p-8 shadow-lg border-t mt-8 rounded-lg">
+						<Tweet {username} />
+
+						<div class="flex flex-col my-auto w-16 space-y-2">
+							<div
+								class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
+							>
+								💩
+							</div>
+							<div
+								class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
+							>
+								🔥
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="absolute bottom-24 left-0 right-0 mx-24 z-40">
-			<TextInput class="h-16 w-full" placeholder="Enter your username" />
+		<div class="flex flex-col py-8">
+			<div
+				class="flex flex-col gap-2 rounded-lg shadow-xl border-t p-4 w-full max-w-xl bg-black text-white"
+			>
+				<div class="flex mx-auto">
+					<h1 class="mb-8">
+						Players ( {(lobbyDetails.players && lobbyDetails.players.length) || '0'} / 20
+						)
+					</h1>
+				</div>
+				<ul id="playerList">
+					{#if lobbyDetails.players}
+						<div class="flex flex-col overflow-auto mx-4">
+							{#each lobbyDetails.players as playerName, i}
+								<li class="border-b my-2 p-1">
+									{playerName}
+									{#if playerName === username}(you){/if}
+								</li>
+							{/each}
+						</div>
+					{/if}
+				</ul>
+			</div>
+			<textarea
+				class="mt-8 min-w-[480px] min-h-24 bg-black text-white border rounded-lg p-4 border-gray-300 leading-tight focus:outline-none"
+				placeholder="Enter your reply"
+			/>
 		</div>
 	</div>
 {:else}

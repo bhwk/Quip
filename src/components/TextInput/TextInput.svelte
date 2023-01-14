@@ -23,7 +23,7 @@
 	type="text"
 	class={`flex-1 px-4 border rounded-lg ${
 		inputClass || ''
-	}  border-gray-300 text-gray-900 leading-tight focus:outline-none focus:border-secondary-400`}
+	}  border-gray-300 leading-tight focus:outline-none`}
 	placeholder={`${inputPlaceholder || ''}`}
 	bind:value
 	on:keydown={type === 'lobby' ? handleKeydown : null}
