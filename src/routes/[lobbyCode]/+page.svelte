@@ -6,6 +6,7 @@
 	import { fade } from 'svelte/transition';
 	import Button from '../../components/Button/Button.svelte';
 	import Card from '../../components/Card/Card.svelte';
+	import Tweet from '../../components/Tweet/Tweet.svelte';
 
 	let hasStarted = false;
 
@@ -60,13 +61,25 @@
 	};
 </script>
 
-{#if hasStarted}
+{#if !hasStarted}
 	<div transition:fade>
 		<Logo class="absolute top-14 right-10 text-6xl px-8 pb-6 pt-2" />
 		<div class="flex flex-col">
 			<div class="flex flex-row mx-auto my-8">
-				<div class="rounded-full w-[80px] h-[80px] bg-gray-300 mt-8 mr-16" />
-				<div class="h-[250px] w-[600px] bg-gray-300 rounded-lg" />
+				<Tweet {username} />
+
+				<div class="flex flex-col my-auto w-16 space-y-2">
+					<div
+						class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
+					>
+						💩
+					</div>
+					<div
+						class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
+					>
+						🔥
+					</div>
+				</div>
 			</div>
 			<div class="flex flex-row mx-auto my-8">
 				<div class="rounded-full w-[80px] h-[80px] bg-gray-300 mt-8 mr-16" />
