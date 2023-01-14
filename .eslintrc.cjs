@@ -13,7 +13,7 @@ module.exports = {
 		node: true
 	},
 	rules: {
-		"no-var": "error",
-        "no-empty": "warn"
+		'no-var': 'error',
+		'no-empty': 'warn'
 	}
 };
