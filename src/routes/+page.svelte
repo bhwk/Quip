@@ -10,10 +10,10 @@
 		</div>
 		<div class="flex flex-col border-2 border-black text-center">
 			<h1>Lobby header</h1>
-			<input type="text" placeholder="text" />
+			<input class="mx-auto"type="text" placeholder="text" />
 			<span>LOBBY CODE</span>
 			<div class="flex justify-between">
-				<a href="/lobby">CREATE</a>
+				<a class="bg-gradient-to-r font-extrabold text-gray-600 from-primary to-secondary rounded-md box-decoration-clone" href="/lobby">CREATE</a>
 				<a href="/lobby">JOIN</a>
 			</div>
 		</div>
