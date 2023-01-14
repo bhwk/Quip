@@ -1,8 +1,19 @@
+const colors = require('tailwindcss/colors');
+
 const config = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
-		extend: {},
+		extend: {
+			fontFamily: {
+				roboto: ['Roboto']
+			}
+		},
 		colors: {
+			gray: colors.gray,
+			black: colors.black,
+			white: colors.white,
+			zinc: colors.zinc,
+			neutral: colors.neutral,
 			primary: {
 				DEFAULT: '#7CFFB1',
 				50: '#FFFFFF',
