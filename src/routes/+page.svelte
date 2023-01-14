@@ -18,7 +18,7 @@
 	<div class="mx-auto pb-32">
 		<Logo class="text-8xl px-8 pb-6 pt-2" />
 	</div>
-	<div id="lobbyContainer" class="flex my-6 mx-auto text-gray-700 space-x-16">
+	<div id="lobbyContainer" class="flex flex-col md:flex-row my-6 mx-auto space-x-16">
 		<Card class="h-[400px] px-12 w-[600px]">
 			<div class="flex flex-col h-full mx-auto items-center">
 				<h1 class="font-extrabold mt-8 text-4xl">
@@ -51,8 +51,9 @@
 					/>
 				</div>
 				<div class="flex justify-between mt-auto mb-12">
-					<Button class="font-extrabold h-12">Create</Button>
-					<Button onClick={joinLobby} class="font-extrabold h-12 px-8">Join</Button>
+					<Button onClick={joinLobby} class="font-extrabold h-12 px-8 w-full"
+						>Join/Create</Button
+					>
 				</div>
 			</div>
 		</Card>

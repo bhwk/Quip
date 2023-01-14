@@ -4,6 +4,8 @@
 	import { io } from 'socket.io-client';
 	import { setContext, getContext, onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
+	import Button from '../../components/Button/Button.svelte';
+	import Card from '../../components/Card/Card.svelte';
 
 	let hasStarted = false;
 
@@ -41,6 +43,7 @@
 		socket.on('getLobbyDetailsResponse', (res) => {
 			// get players
 			lobbyDetails = res;
+			console.log(lobbyDetails);
 			console.log('getLobbyDetailsResponse', lobbyDetails);
 		});
 	});
@@ -84,19 +87,32 @@
 		<div class="text-center flex flex-col gap-2">
 			<Logo class="text-3xl px-4 py-2 pb-4" logoText={lobbyCode} />
 		</div>
-		<div class="flex flex-col gap-2">
-			<ul id="playerList" class="border-2 border-black p-4 w-96">
+		<Card class="w-full max-w-xl p-4 px-12 mt-8">
+			<Button class="text-3xl p-4 bg-black">Click to copy link!</Button>
+			<div class="mt-12">
+				<Button class="text-3xl p-4 bg-black">Start the Game!</Button>
+			</div>
+		</Card>
+		<div
+			class="flex flex-col gap-2 rounded-lg shadow-xl border-t p-4 w-full max-w-xl mt-16 bg-white"
+		>
+			<div class="flex mx-auto">
+				<h1 class="mb-8">
+					Players ( {(lobbyDetails.players && lobbyDetails.players.length) || '0'} / 20 )
+				</h1>
+			</div>
+			<ul id="playerList">
 				{#if lobbyDetails.players}
-					<label>test</label>
-					{#each lobbyDetails.players as playerName, i}
-						<li>{playerName}</li>
-					{/each}
+					<div class="flex flex-col overflow-auto mx-4">
+						{#each lobbyDetails.players as playerName, i}
+							<li class="border-b my-2 p-1">
+								{playerName}
+								{#if playerName === username}(you){/if}
+							</li>
+						{/each}
+					</div>
 				{/if}
 			</ul>
-			<div class="flex gap-2">
-				<button class="border-2">START</button>
-				<button on:click={getPlayers}>test</button>
-			</div>
 		</div>
 	</div>
 {/if}
