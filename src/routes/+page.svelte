@@ -1,15 +1,17 @@
 <div class="flex flex-1 flex-col h-screen">
 	<logo class="self-center">LOGO</logo>
-	<div id="lobbyContainer" class="grid grid-cols-2">
+	<div id="lobbyContainer" class="flex flex-1 justify-around">
 		<div>
-			Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore illo nulla corporis,
-			quas, ipsam qui laudantium explicabo labore molestias, eos fuga sequi tenetur!
-			Perferendis ullam consequatur velit, maiores eos voluptatibus.
+			<h1>Tutorial header</h1>
 		</div>
-		<div>
-			Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, vitae! Molestias neque
-			reprehenderit quidem odio, voluptate tempore. Obcaecati ipsa minus natus sapiente dolor
-			ratione non nisi assumenda harum. Eius, recusandae!
+		<div class="flex flex-col text-center">
+			<h1>Lobby header</h1>
+			<input type="text" placeholder="text" />
+			<span>LOBBY CODE</span>
+			<div class="flex justify-between">
+				<button>CREATE</button>
+				<button>JOIN</button>
+			</div>
 		</div>
 	</div>
 </div>
