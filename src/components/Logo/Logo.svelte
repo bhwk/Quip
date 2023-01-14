@@ -1,6 +1,4 @@
 <script>
-	export let size;
-
 	let inputClass;
 	export { inputClass as class };
 </script>

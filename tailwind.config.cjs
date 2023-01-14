@@ -10,6 +10,8 @@ const config = {
 		},
 		colors: {
 			gray: colors.gray,
+			blue: colors.blue,
+			green: colors.green,
 			black: colors.black,
 			white: colors.white,
 			zinc: colors.zinc,
