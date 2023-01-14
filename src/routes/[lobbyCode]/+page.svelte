@@ -31,27 +31,13 @@
 			}
 		});
 
-		socket.on('joinLobbyResponse', (res) => {
-			if (!res.success) {
-				// Redirect to home with message
-			}
-			console.log('joined lobby succesfully');
+		socket.on('joinLobbyFailure', (res) => {
+			// todo: redirect to home page
 		});
 
 		socket.on('lobbyUpdate', (res) => {
-			console.log('Lobby has been updated');
-			if (!res) {
-				socket.emit('getLobbyDetailsRequest');
-			} else {
-				goto('/');
-			}
-		});
-
-		socket.on('getLobbyDetailsResponse', (res) => {
-			// get players
 			lobbyDetails = res;
-			console.log(lobbyDetails);
-			console.log('getLobbyDetailsResponse', lobbyDetails);
+			console.log('lobbyUpdate', lobbyDetails);
 		});
 
 		socket.on('roundUpdate', (update) => {});
