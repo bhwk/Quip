@@ -3,13 +3,16 @@
 	let content;
 </script>
 
-<div class="self-center flex grow-0 flex-col max-w-md bg-black rounded-3xl text-white p-4 border border-gray-600">
-	<div class="flex flex-col">
-		<div class="font-bold">
-			{username}
-		</div>
-		<div class="text-neutral-400 text-sm font-light">
-			@{username}
+<div class="self-center flex grow-0 flex-col max-w-md bg-black rounded-3xl text-white p-4 box-border border border-gray-600">
+	<div class="flex gap-2">
+		<div class="bg-white w-12 h-12 rounded-full"></div>
+		<div class="flex flex-col">
+			<div class="font-bold">
+				{username}
+			</div>
+			<div class="text-neutral-400 text-sm font-light">
+				@{username}
+			</div>
 		</div>
 	</div>
 	<div class="text-sm">
