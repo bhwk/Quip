@@ -66,7 +66,7 @@
 		<Logo class="absolute top-14 right-10 text-6xl px-8 pb-6 pt-2" />
 		<div class="flex flex-col">
 			<div class="flex flex-row mx-auto my-8">
-				<Tweet username="@kenny" />
+				<Tweet {username} />
 
 				<div class="flex flex-col my-auto w-16 space-y-2">
 					<div
