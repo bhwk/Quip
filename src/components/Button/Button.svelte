@@ -2,10 +2,9 @@
 	let inputClass;
 	export { inputClass as class };
 
-	let inputPlaceholder;
-	export { inputPlaceholder as placeholder };
+	export let onClick;
 </script>
 
-<button class={`flex items-center px-4 bg-gray-600 text-white rounded-lg ${inputClass || ''} `}>
+<button on:click={onClick} class={`flex items-center px-4 bg-gray-600 text-white rounded-lg ${inputClass || ''} `}>
 	<slot />
 </button>

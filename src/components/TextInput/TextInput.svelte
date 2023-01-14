@@ -4,6 +4,7 @@
 
 	let inputPlaceholder;
 	export { inputPlaceholder as placeholder };
+
 </script>
 
 <input
