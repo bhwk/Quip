@@ -7,6 +7,7 @@
 	import Button from '../../components/Button/Button.svelte';
 	import Card from '../../components/Card/Card.svelte';
 	import Tweet from '../../components/Tweet/Tweet.svelte';
+	import TextInput from '../../components/TextInput/TextInput.svelte';
 
 	let hasStarted = false;
 
@@ -81,18 +82,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="flex flex-row mx-auto my-8">
-				<div class="rounded-full w-[80px] h-[80px] bg-gray-300 mt-8 mr-16" />
-				<div class="h-[250px] w-[600px] bg-gray-300 rounded-lg" />
-			</div>
-			<div class="flex flex-row mx-auto my-8">
-				<div class="rounded-full w-[80px] h-[80px] bg-gray-300 mt-8 mr-16" />
-				<div class="h-[250px] w-[600px] bg-gray-300 rounded-lg" />
-			</div>
-			<div class="flex flex-row mx-auto my-8">
-				<div class="rounded-full w-[80px] h-[80px] bg-gray-300 mt-8 mr-16" />
-				<div class="h-[250px] w-[600px] bg-gray-300 rounded-lg" />
-			</div>
+		</div>
+		<div class="absolute bottom-24 left-0 right-0 mx-24 z-40">
+			<TextInput class="h-16 w-full" placeholder="Enter your username" />
 		</div>
 	</div>
 {:else}
