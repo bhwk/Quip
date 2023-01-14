@@ -6,6 +6,7 @@
 	import { fade } from 'svelte/transition';
 	import Button from '../../components/Button/Button.svelte';
 	import Card from '../../components/Card/Card.svelte';
+	import { goto } from '$app/navigation';
 
 	let hasStarted = false;
 
@@ -28,16 +29,19 @@
 		});
 
 		socket.on('joinLobbyResponse', (res) => {
-			console.log('joined lobby succesfully');
 			if (!res.success) {
 				// Redirect to home with message
 			}
+			console.log('joined lobby succesfully');
 		});
 
-		socket.on('userJoinLobby', () => {
-			//  when user joined
-			console.log('a user has joined the lobby lets request for data');
-			socket.emit('getLobbyDetailsRequest');
+		socket.on('lobbyUpdate', (res) => {
+			console.log('Lobby has been updated');
+			if (!res) {
+				socket.emit('getLobbyDetailsRequest');
+			} else {
+				goto('/');
+			}
 		});
 
 		socket.on('getLobbyDetailsResponse', (res) => {
