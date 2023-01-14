@@ -12,8 +12,15 @@
 
 	let hasStarted = false;
 	let currentScreen = 'lobby';
+	let currentRoundData;
+	let reply;
+	let inputDisabled = false;
+	let inputPlaceholder = "Enter your reply";
+	let timer='1:00';
+
 
 	export let data;
+	
 
 	const lobbyCode = data.props.lobbyCode;
 	const username = data.props.username;
@@ -41,13 +48,32 @@
 		});
 
 		socket.on('roundUpdate', (update) => {});
+
+		socket.on('gameStart', (res)=> {
+			currentRoundData=res.roundData;
+		});
+		
+
 	});
 
 	const startGame = (e) => {
 		// placeholder to switch views
 		e.preventDefault();
+		socket.emit('hostStartGame');
 		currentScreen = 'game';
 	};
+
+	const onSubmitReply = (event) => {
+		if (event.code === 'Enter'){
+		socket.emit('receiveAnswer', reply);
+		event.target.value = '';
+		inputDisabled = true;
+		inputPlaceholder = 'Reply submitted!'
+		} 
+	}
+
+	
+	
 </script>
 
 {#if currentScreen === 'game'}
@@ -76,62 +102,6 @@
 					</div>
 				</div>
 
-				<div class="flex flex-row mx-auto space-y-8">
-					<div class="flex flex-row bg-white p-8 shadow-lg border-t mt-8 rounded-lg">
-						<Tweet {username} />
-
-						<div class="flex flex-col my-auto w-16 space-y-2">
-							<div
-								class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
-							>
-								💩
-							</div>
-							<div
-								class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
-							>
-								🔥
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="flex flex-row mx-auto space-y-8">
-					<div class="flex flex-row bg-white p-8 shadow-lg border-t mt-8 rounded-lg">
-						<Tweet {username} />
-
-						<div class="flex flex-col my-auto w-16 space-y-2">
-							<div
-								class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
-							>
-								💩
-							</div>
-							<div
-								class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
-							>
-								🔥
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="flex flex-row mx-auto space-y-8">
-					<div class="flex flex-row bg-white p-8 shadow-lg border-t mt-8 rounded-lg">
-						<Tweet {username} />
-
-						<div class="flex flex-col my-auto w-16 space-y-2">
-							<div
-								class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
-							>
-								💩
-							</div>
-							<div
-								class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
-							>
-								🔥
-							</div>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 		<div class="flex flex-col py-8">
@@ -157,10 +127,12 @@
 					{/if}
 				</ul>
 			</div>
-			<textarea
-				class="mt-8 min-w-[480px] min-h-24 bg-black text-white border rounded-lg p-4 border-gray-300 leading-tight focus:outline-none"
-				placeholder="Enter your reply"
+			<input type="text" bind:value={reply} on:keydown={onSubmitReply}
+				class="disabled:cursor-not-allowed mt-8 min-w-[480px] min-h-24 bg-black text-white border rounded-lg p-4 border-gray-300 leading-tight focus:outline-none"
+				placeholder={inputPlaceholder}
+				disabled={inputDisabled || null}
 			/>
+			<p class="flex font-bold text-lg">{timer}</p>
 		</div>
 	</div>
 {:else if currentScreen === 'lobby'}
