@@ -48,6 +48,7 @@
 						bind:value={lobbyCode}
 						class="h-12 w-full"
 						placeholder="Enter the lobby code"
+						type="lobby"
 					/>
 				</div>
 				<div class="flex justify-between mt-auto mb-12">

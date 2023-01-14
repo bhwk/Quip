@@ -88,9 +88,9 @@
 			<Logo class="text-3xl px-4 py-2 pb-4" logoText={lobbyCode} />
 		</div>
 		<Card class="w-full max-w-xl p-4 px-12 mt-8">
-			<Button class="text-3xl p-4 bg-black">Click to copy link!</Button>
+			<Button class="text-3xl p-4">Click to copy link!</Button>
 			<div class="mt-12">
-				<Button class="text-3xl p-4 bg-black">Start the Game!</Button>
+				<Button class="text-3xl p-4" onClick={startGame}>Start the Game!</Button>
 			</div>
 		</Card>
 		<div

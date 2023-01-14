@@ -6,7 +6,17 @@
 	export { inputPlaceholder as placeholder };
 
 	export let value;
+	export let type;
 
+	function handleKeydown(event) {
+		// prevent that a space is typed
+		if (event.code === 'Space') event.preventDefault();
+	}
+
+	function handleInput(event) {
+		// remove spaces from pasted text
+		value = value.replaceAll(' ', '');
+	}
 </script>
 
 <input
@@ -15,5 +25,7 @@
 		inputClass || ''
 	}  border-gray-300 text-gray-900 leading-tight focus:outline-none focus:border-secondary-400`}
 	placeholder={`${inputPlaceholder || ''}`}
-	bind:value = {value}
+	bind:value
+	on:keydown={type === 'lobby' ? handleKeydown : null}
+	on:input={type === 'lobby' ? handleInput : null}
 />
