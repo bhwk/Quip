@@ -8,11 +8,11 @@
 		<div class="font-bold">
 			{username}
 		</div>
-		<div class="text-neutral-400 text-sm">
+		<div class="text-neutral-400 text-sm font-light">
 			@{username}
 		</div>
 	</div>
-	<div>
+	<div class="text-sm">
 		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, blanditiis? Sed quod
 		reprehenderit quis cum, reiciendis a odit praesentium aspernatur quisquam earum aut
 		explicabo, ratione esse laboriosam fugit molestias adipisci.
