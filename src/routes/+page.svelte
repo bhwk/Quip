@@ -9,8 +9,8 @@
 			<input type="text" placeholder="text" />
 			<span>LOBBY CODE</span>
 			<div class="flex justify-between">
-				<button>CREATE</button>
-				<button>JOIN</button>
+				<a href="/lobby">CREATE</a>
+				<a href="/lobby">JOIN</a>
 			</div>
 		</div>
 	</div>
