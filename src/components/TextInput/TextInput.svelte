@@ -5,6 +5,8 @@
 	let inputPlaceholder;
 	export { inputPlaceholder as placeholder };
 
+	export let value;
+
 </script>
 
 <input
@@ -13,4 +15,5 @@
 		inputClass || ''
 	}  border-gray-300 text-gray-900 leading-tight focus:outline-none focus:border-secondary-400`}
 	placeholder={`${inputPlaceholder || ''}`}
+	bind:value = {value}
 />

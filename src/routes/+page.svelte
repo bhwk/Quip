@@ -3,6 +3,9 @@
 	import Card from '../components/Card/Card.svelte';
 	import Logo from '../components/Logo/Logo.svelte';
 	import TextInput from '../components/TextInput/TextInput.svelte';
+
+	let username='';
+	let lobbyCode='';
 </script>
 
 <div class="flex flex-col pt-8 px-6 lg:px-8">
@@ -29,16 +32,16 @@
 			<div class="flex flex-col mx-auto h-full">
 				<h1 class="font-extrabold mt-8 text-4xl mx-auto">Joining A Lobby❓</h1>
 				<div class="space-y-8 mt-12">
-					<TextInput class="h-12 w-full" placeholder="Enter your username" />
+					<TextInput bind:value={username} class="h-12 w-full" placeholder="Enter your username" />
 
-					<TextInput class="h-12 w-full" placeholder="Enter the lobby code" />
+					<TextInput bind:value={lobbyCode} class="h-12 w-full" placeholder="Enter the lobby code" />
 				</div>
 				<div class="flex justify-between mt-auto mb-12">
 					<Button class="font-extrabold h-12">
-						<a href="/lobby">Create</a>
+						Create
 					</Button>
 					<Button class="font-extrabold h-12 px-8">
-						<a href="/lobby">Join</a>
+						Join
 					</Button>
 				</div>
 			</div>
