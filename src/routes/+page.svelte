@@ -1,7 +1,12 @@
+<script>
+	import Logo from '../components/Logo/Logo.svelte';
+</script>
+
 <div class="flex flex-1 flex-col h-screen">
 	<logo class="self-center">LOGO</logo>
 	<div id="lobbyContainer" class="flex flex-1 justify-around">
 		<div>
+			<Logo />
 			<h1>Tutorial header</h1>
 		</div>
 		<div class="flex flex-col text-center">
