@@ -7,7 +7,7 @@
 
 <div class="flex items-center">
 	<div
-		class={`font-extrabold px-2 py-1 cursor-pointer rounded-md box-decoration-clone bg-gradient-to-r from-primary to-secondary text-gray-800 text-2xl select-none hover:text-gray-700 ${
+		class={`font-extrabold cursor-pointer rounded-lg box-decoration-clone bg-gradient-to-r from-primary to-secondary text-gray-800 select-none hover:text-gray-700 ${
 			inputClass || ''
 		}`}
 	>

@@ -2,7 +2,10 @@
 	import Logo from '../components/Logo/Logo.svelte';
 </script>
 
-<div class="flex flex-1 flex-col">
+<div class="flex flex-col pt-8 px-6 lg:px-8">
+	<div class="mx-auto">
+		<Logo class="text-8xl px-2 pb-6 pt-2" />
+	</div>
 	<div id="lobbyContainer" class="flex flex-1 justify-around">
 		<div class="border-2 border-black">
 			<h1>Tutorial header</h1>
