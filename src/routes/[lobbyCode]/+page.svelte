@@ -52,6 +52,8 @@
 			console.log(lobbyDetails);
 			console.log('getLobbyDetailsResponse', lobbyDetails);
 		});
+
+		socket.on('roundUpdate', (update) => {});
 	});
 
 	const startGame = (e) => {
@@ -66,7 +68,7 @@
 	};
 </script>
 
-{#if !hasStarted}
+{#if hasStarted}
 	<div class="flex flex-row justify-evenly" transition:fade>
 		<Logo class="absolute top-14 left-10 text-6xl px-8 pb-6 pt-2" />
 		<div class="flex flex-col">
