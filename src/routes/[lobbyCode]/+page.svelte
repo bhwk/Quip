@@ -1,15 +1,14 @@
 <script>
 	import Logo from '../../components/Logo/Logo.svelte';
-	import { page } from '$app/stores';
 	import { io } from 'socket.io-client';
 	import { setContext, getContext, onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
 	import Button from '../../components/Button/Button.svelte';
 	import Card from '../../components/Card/Card.svelte';
-	import { goto } from '$app/navigation';
 	import Tweet from '../../components/Tweet/Tweet.svelte';
-	import TextInput from '../../components/TextInput/TextInput.svelte';
 	import Winner from '../../components/Winner/Winner.svelte';
+
+	let avatarObj = {};
 
 	let currentScreen = 'lobby';
 	let currentRoundData;
@@ -84,13 +83,13 @@
 				return {
 					score: p.score,
 					username: p.name,
-					currentRoundAnswer: p.currentRoundAnswer,
+					currentRoundAnswer: p.currentRoundAnswer
 				};
 			});
 		});
 
 		socket.on('gameEnd', () => {
-			currentScreen='gameEnd';
+			currentScreen = 'gameEnd';
 		});
 	});
 
@@ -139,6 +138,7 @@
 								<Tweet
 									username={currentRoundData.username}
 									content={currentRoundData.content[0]}
+									avatar={currentRoundData.avatar}
 								/>
 							</div>
 						</div>
@@ -164,19 +164,17 @@
 											<div
 												class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
 												on:click={(e) => {
-													if (
-														answer.username == username
-													) {
-														return
+													if (answer.username == username) {
+														return;
 													}
 
 													if (!votedArr.includes(answer.username)) {
-
-														socket.emit('receiveVotes', answer.username);
+														socket.emit(
+															'receiveVotes',
+															answer.username
+														);
 														votedArr.push(answer.username);
 													}
-													
-													
 												}}
 											>
 												🔥
@@ -261,5 +259,5 @@
 		</div>
 	</div>
 {:else if currentScreen === 'gameEnd'}
-	<Winner data={lobbyDetails.players}/>
+	<Winner data={lobbyDetails.players} />
 {/if}
