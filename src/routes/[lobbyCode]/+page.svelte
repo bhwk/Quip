@@ -29,6 +29,8 @@
 
 	export let lobbyDetails = {};
 
+	let sortedAnswers = [];
+
 	let socket;
 	// setContext('socket', socket);
 
@@ -88,9 +90,16 @@
 				return {
 					score: p.score,
 					username: p.name,
-					currentRoundAnswer: p.currentRoundAnswer
+					currentRoundAnswer: p.currentRoundAnswer,
+					timeAnswered: p.timeAnswered
 				};
 			});
+
+			sortedAnswers = currentRoundAnswers;
+			sortedAnswers = sortedAnswers.sort((a, b) => {
+				return b.timeAnswered - a.timeAnswered;
+			});
+			console.log(sortedAnswers);
 		});
 
 		socket.on('gameEnd', () => {
@@ -149,8 +158,8 @@
 						</div>
 					</div>
 				{/if}
-				{#if currentRoundAnswers}
-					{#each currentRoundAnswers as answer, i}
+				{#if sortedAnswers}
+					{#each sortedAnswers as answer, i}
 						{#if answer.currentRoundAnswer}
 							<div transition:fly={{ y: 200, duration: 2000 }}>
 								<div class="flex flex-row mx-auto space-y-8 answer-row">
