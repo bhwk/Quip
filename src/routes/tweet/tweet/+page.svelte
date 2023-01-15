@@ -1,5 +1,5 @@
 <script>
-    import Tweet from "../../../components/Tweet/Tweet.svelte";
+	import Tweet from '../../../components/Tweet/Tweet.svelte';
 </script>
 
-<Tweet/>
+<Tweet />

@@ -13,7 +13,7 @@
 		if (event.code === 'Space') event.preventDefault();
 	}
 
-	function handleInput(event) {
+	function handleInput() {
 		// remove spaces from pasted text
 		value = value.replaceAll(' ', '');
 	}

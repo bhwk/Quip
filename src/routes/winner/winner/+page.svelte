@@ -1,5 +1,5 @@
 <script>
-    import Winner from "../../../components/Winner/Winner.svelte";
+	import Winner from '../../../components/Winner/Winner.svelte';
 </script>
 
-<Winner/>
+<Winner />

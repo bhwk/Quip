@@ -1,15 +1,13 @@
 <script>
 	import Logo from '../../components/Logo/Logo.svelte';
 	import { io } from 'socket.io-client';
-	import { setContext, getContext, onMount } from 'svelte';
-	import { fade, fly } from 'svelte/transition';
+	import { onMount } from 'svelte';
+	import { fly } from 'svelte/transition';
 	import Button from '../../components/Button/Button.svelte';
 	import Card from '../../components/Card/Card.svelte';
 	import Tweet from '../../components/Tweet/Tweet.svelte';
 	import Winner from '../../components/Winner/Winner.svelte';
 	import { goto } from '$app/navigation';
-
-	let avatarObj = {};
 
 	let currentScreen = 'lobby';
 	let currentRoundData;
@@ -44,6 +42,9 @@
 
 		socket.on('joinLobbyFailure', (res) => {
 			// todo: redirect to home page
+			if (res) {
+				return;
+			}
 		});
 
 		socket.on('forceKick', () => {
@@ -85,7 +86,7 @@
 		});
 
 		socket.on('gameUpdate', (res) => {
-			timer = res.timeLeft;
+			timer = res.timeft;
 			currentRoundAnswers = res.players.map((p) => {
 				return {
 					score: p.score,
@@ -177,7 +178,7 @@
 											</div>
 											<div
 												class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
-												on:click={(e) => {
+												on:click={() => {
 													if (answer.username == username) {
 														return;
 													}
