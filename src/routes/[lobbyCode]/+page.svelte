@@ -33,7 +33,7 @@
 	// setContext('socket', socket);
 
 	onMount(async () => {
-		socket = io('http://localhost:3000/', {
+		socket = io('http://45.63.15.234:3000/', {
 			auth: {
 				username,
 				lobby: lobbyCode
