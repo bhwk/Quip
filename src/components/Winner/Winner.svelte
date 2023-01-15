@@ -3,8 +3,13 @@
     import { fade } from 'svelte/transition';
     import { elasticOut, cubicOut, linear } from 'svelte/easing';
 
-    let players=['first','second','third'];
+    export let data;
+    let players;
     let ready = false;
+
+    players = data.sort((a,b)=> b.score-a.score);
+    players = players.slice(0,3);
+    players = players.map(p => p.name);
 
     onMount(()=> ready = true);
 
@@ -20,7 +25,6 @@
     }
 </script>
 
-{#if players}
 <div class="flex flex-col gap-10 p-4">
     {#if ready}
         <div in:rollIn="{{duration:4000, easing:cubicOut}}" class="flex flex-col gap-2 max-w-md self-center w-full items-center py-8 rounded-3xl bg-white shadow-xl border-t">
@@ -45,4 +49,3 @@
         </div>
         {/if}
 </div>
-{/if}

@@ -20,6 +20,8 @@
 	let inputPlaceholder = 'Enter your reply';
 	let timer = 30;
 
+	let votedArr = [];
+
 	export let data;
 
 	const lobbyCode = data.props.lobbyCode;
@@ -57,6 +59,7 @@
 
 			inputPlaceholder = 'Enter your reply';
 			inputDisabled = false;
+			votedArr = [];
 			console.log('roundStart', res);
 		});
 
@@ -82,9 +85,12 @@
 					score: p.score,
 					username: p.name,
 					currentRoundAnswer: p.currentRoundAnswer,
-					hasVoted: false
 				};
 			});
+		});
+
+		socket.on('gameEnd', () => {
+			currentScreen='gameEnd';
 		});
 	});
 
@@ -159,12 +165,18 @@
 												class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
 												on:click={(e) => {
 													if (
-														!answer.hasVoted &&
-														answer.username !== username
+														answer.username == username
 													) {
-														answer.score++;
-														socket.emit('receiveVotes', answer.score);
+														return
 													}
+
+													if (!votedArr.includes(answer.username)) {
+
+														socket.emit('receiveVotes', answer.username);
+														votedArr.push(answer.username);
+													}
+													
+													
 												}}
 											>
 												🔥
@@ -248,6 +260,6 @@
 			</ul>
 		</div>
 	</div>
-{:else if currentScreen === 'endGame'}
-	<Winner />
+{:else if currentScreen === 'gameEnd'}
+	<Winner data={lobbyDetails.players}/>
 {/if}
