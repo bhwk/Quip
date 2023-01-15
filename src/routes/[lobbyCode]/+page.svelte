@@ -9,6 +9,7 @@
 	import { goto } from '$app/navigation';
 	import Tweet from '../../components/Tweet/Tweet.svelte';
 	import TextInput from '../../components/TextInput/TextInput.svelte';
+	import Winner from '../../components/Winner/Winner.svelte';
 
 	let hasStarted = false;
 	let currentScreen = 'lobby';
@@ -206,4 +207,7 @@
 			</ul>
 		</div>
 	</div>
+
+{:else if currentScreen==='endGame'}
+<Winner/>
 {/if}

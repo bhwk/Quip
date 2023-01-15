@@ -1,10 +1,29 @@
 <script>
-    let players;
+    import { onMount } from 'svelte';
+    import { fade } from 'svelte/transition';
+    import { elasticOut, cubicOut, linear } from 'svelte/easing';
+
+    let players=['first','second','third'];
+    let ready = false;
+
+    onMount(()=> ready = true);
+
+    function rollIn(node, params) {
+        const existingTransform = getComputedStyle(node).transform.replace('none', '');
+
+        return {
+            delay: params.delay || 0,
+            duration: params.duration || 400,
+            easing: params.easing,
+            css: (t, u) => `transform-origin: center; transform: ${existingTransform} translatex(${-u * 100}%) rotate(${t*1080}deg);`
+        };
+    }
 </script>
 
 {#if players}
 <div class="flex flex-col gap-10 p-4">
-        <div class="flex flex-col gap-2 max-w-md self-center w-full items-center py-8 rounded-3xl bg-white shadow-xl border-t">
+    {#if ready}
+        <div in:rollIn="{{easing:linear}}" class="flex flex-col gap-2 max-w-md self-center w-full items-center py-8 rounded-3xl bg-white shadow-xl border-t">
             <div class="bg-black rounded-full w-28 h-28"></div>
             <div class="text-7xl">🥇</div>
             <div class="text-6xl">{players[0]}</div>
@@ -24,5 +43,6 @@
                 {/if}
             {/each}
         </div>
+        {/if}
 </div>
 {/if}
