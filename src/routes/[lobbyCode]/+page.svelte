@@ -7,6 +7,7 @@
 	import Card from '../../components/Card/Card.svelte';
 	import Tweet from '../../components/Tweet/Tweet.svelte';
 	import Winner from '../../components/Winner/Winner.svelte';
+	import { goto } from '$app/navigation';
 
 	let avatarObj = {};
 
@@ -41,6 +42,10 @@
 
 		socket.on('joinLobbyFailure', (res) => {
 			// todo: redirect to home page
+		});
+
+		socket.on('forceKick', () => {
+			goto('/');
 		});
 
 		socket.on('lobbyUpdate', (res) => {
