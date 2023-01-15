@@ -4,7 +4,7 @@
 </script>
 
 <div
-	class="self-center flex gap-2 grow-0 max-w-md bg-black rounded-3xl text-white p-4 box-border border border-gray-600"
+	class="self-center flex gap-2 grow-0 w-[400px] bg-black rounded-3xl text-white p-4 box-border border border-gray-600"
 >
 	<div class="flex gap-2">
 		<div class="bg-white w-12 h-12 rounded-full" />

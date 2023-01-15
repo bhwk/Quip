@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import { io } from 'socket.io-client';
 	import { setContext, getContext, onMount } from 'svelte';
-	import { fade } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
 	import Button from '../../components/Button/Button.svelte';
 	import Card from '../../components/Card/Card.svelte';
 	import { goto } from '$app/navigation';
@@ -14,14 +14,14 @@
 	let hasStarted = false;
 	let currentScreen = 'lobby';
 	let currentRoundData;
+	let currentRoundAnswers;
+
 	let reply;
 	let inputDisabled = false;
-	let inputPlaceholder = "Enter your reply";
-	let timer='1:00';
-
+	let inputPlaceholder = 'Enter your reply';
+	let timer = 30;
 
 	export let data;
-	
 
 	const lobbyCode = data.props.lobbyCode;
 	const username = data.props.username;
@@ -45,16 +45,43 @@
 
 		socket.on('lobbyUpdate', (res) => {
 			lobbyDetails = res;
+			if (currentScreen === 'lobby' && lobbyDetails.hasStarted) {
+				currentScreen = 'game';
+				socket.emit('forceGameUpdate');
+				console.log('forceGameUpdate');
+			}
 			console.log('lobbyUpdate', lobbyDetails);
 		});
 
-		socket.on('roundUpdate', (update) => {});
-
-		socket.on('gameStart', (res)=> {
-			currentRoundData=res.roundData;
+		socket.on('roundStart', (res) => {
+			currentRoundData = res.roundData;
+			console.log('roundStart', res);
 		});
-		
 
+		socket.on('forceClientUpdate', (res) => {
+			console.log('forceClientUpdate', res);
+			currentRoundData = res.roundData;
+			console.log('forceClientUpdate', res);
+		});
+
+		socket.on('gameStart', (res) => {
+			if (!res.success) {
+				goto('/');
+			}
+			currentRoundData = res.roundData;
+			console.log(currentRoundData);
+		});
+
+		socket.on('gameUpdate', (res) => {
+			timer = res.timeLeft;
+			currentRoundAnswers = res.players.map((p) => {
+				return {
+					username: p.name,
+					currentRoundVotes: p.currentRoundVotes,
+					currentRoundAnswer: p.currentRoundAnswer
+				};
+			});
+		});
 	});
 
 	const startGame = (e) => {
@@ -62,19 +89,18 @@
 		e.preventDefault();
 		socket.emit('hostStartGame');
 		currentScreen = 'game';
+		inputPlaceholder = 'Enter your reply';
+		inputDisabled = false;
 	};
 
 	const onSubmitReply = (event) => {
-		if (event.code === 'Enter'){
-		socket.emit('receiveAnswer', reply);
-		event.target.value = '';
-		inputDisabled = true;
-		inputPlaceholder = 'Reply submitted!'
-		} 
-	}
-
-	
-	
+		if (event.code === 'Enter') {
+			socket.emit('receiveAnswer', reply);
+			event.target.value = '';
+			inputDisabled = true;
+			inputPlaceholder = 'Reply submitted!';
+		}
+	};
 </script>
 
 {#if currentScreen === 'game'}
@@ -84,25 +110,34 @@
 			<div
 				class="flex flex-col h-[800px] overflow-y-scroll w-fit py-8 px-16 mx-auto scroll-smooth scrollbar-hide rounded-lg shadow-lg mt-8 border-t"
 			>
-				<div class="flex flex-row mx-auto space-y-8">
-					<div class="flex flex-row bg-white p-8 shadow-lg border-t mt-8 rounded-lg">
-						<Tweet {username} />
-
-						<div class="flex flex-col my-auto w-16 space-y-2">
-							<div
-								class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
-							>
-								💩
-							</div>
-							<div
-								class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
-							>
-								🔥
+				{#if currentRoundData}
+					<div id="tweet">
+						<div class="flex flex-row mx-auto space-y-8">
+							<div class="flex flex-row mt-2 rounded-lg">
+								<Tweet
+									username={currentRoundData.username}
+									content={currentRoundData.content[0]}
+								/>
 							</div>
 						</div>
 					</div>
-				</div>
-
+				{/if}
+				{#if currentRoundAnswers}
+					{#each currentRoundAnswers as answer, i}
+						{#if answer.currentRoundAnswer}
+							<div transition:fly={{ y: 200, duration: 2000 }}>
+								<div class="flex flex-row mx-auto space-y-8 answer-row">
+									<div class="flex flex-row mt-2 rounded-lg">
+										<Tweet
+											username={answer.username}
+											content={answer.currentRoundAnswer}
+										/>
+									</div>
+								</div>
+							</div>
+						{/if}
+					{/each}
+				{/if}
 			</div>
 		</div>
 		<div class="flex flex-col py-8">
@@ -128,12 +163,15 @@
 					{/if}
 				</ul>
 			</div>
-			<input type="text" bind:value={reply} on:keydown={onSubmitReply}
+			<input
+				type="text"
+				bind:value={reply}
+				on:keydown={onSubmitReply}
 				class="disabled:cursor-not-allowed mt-8 min-w-[480px] min-h-24 bg-black text-white border rounded-lg p-4 border-gray-300 leading-tight focus:outline-none"
 				placeholder={inputPlaceholder}
 				disabled={inputDisabled || null}
 			/>
-			<p class="flex font-bold text-lg">{timer}</p>
+			<p class="flex font-bold text-lg">{timer || 30}</p>
 		</div>
 	</div>
 {:else if currentScreen === 'lobby'}
