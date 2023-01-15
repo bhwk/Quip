@@ -11,7 +11,6 @@
 	import TextInput from '../../components/TextInput/TextInput.svelte';
 	import Winner from '../../components/Winner/Winner.svelte';
 
-	let hasStarted = false;
 	let currentScreen = 'lobby';
 	let currentRoundData;
 	let currentRoundAnswers;
@@ -55,6 +54,9 @@
 
 		socket.on('roundStart', (res) => {
 			currentRoundData = res.roundData;
+
+			inputPlaceholder = 'Enter your reply';
+			inputDisabled = false;
 			console.log('roundStart', res);
 		});
 
@@ -62,23 +64,25 @@
 			console.log('forceClientUpdate', res);
 			currentRoundData = res.roundData;
 			console.log('forceClientUpdate', res);
+			inputPlaceholder = 'Enter your reply';
+			inputDisabled = false;
 		});
 
 		socket.on('gameStart', (res) => {
-			if (!res.success) {
-				goto('/');
-			}
 			currentRoundData = res.roundData;
-			console.log(currentRoundData);
+			if (currentScreen === 'lobby') {
+				currentScreen = 'game';
+			}
 		});
 
 		socket.on('gameUpdate', (res) => {
 			timer = res.timeLeft;
 			currentRoundAnswers = res.players.map((p) => {
 				return {
+					score: p.score,
 					username: p.name,
-					currentRoundVotes: p.currentRoundVotes,
-					currentRoundAnswer: p.currentRoundAnswer
+					currentRoundAnswer: p.currentRoundAnswer,
+					hasVoted: false
 				};
 			});
 		});
@@ -87,6 +91,18 @@
 	const startGame = (e) => {
 		// placeholder to switch views
 		e.preventDefault();
+		const isHost = lobbyDetails.players.reduce((acc, u) => {
+			if (u.name === username) {
+				acc = u.isHost;
+			}
+			return acc;
+		}, false);
+
+		if (!isHost) {
+			alert('Only host can start');
+			return;
+		}
+
 		socket.emit('hostStartGame');
 		currentScreen = 'game';
 		inputPlaceholder = 'Enter your reply';
@@ -132,6 +148,28 @@
 											username={answer.username}
 											content={answer.currentRoundAnswer}
 										/>
+
+										<div class="flex flex-col my-auto w-16 space-y-2">
+											<div
+												class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
+											>
+												💩
+											</div>
+											<div
+												class="rounded-full text-2xl w-[40px] h-[40px] text-center bg-black cursor-pointer mx-auto"
+												on:click={(e) => {
+													if (
+														!answer.hasVoted &&
+														answer.username !== username
+													) {
+														answer.score++;
+														socket.emit('receiveVotes', answer.score);
+													}
+												}}
+											>
+												🔥
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -153,10 +191,12 @@
 				<ul id="playerList">
 					{#if lobbyDetails.players}
 						<div class="flex flex-col overflow-auto mx-4">
-							{#each lobbyDetails.players as playerName, i}
+							{#each lobbyDetails.players as playerObj, i}
 								<li class="border-b my-2 p-1">
-									{playerName}
-									{#if playerName === username}(you){/if}
+									{#if playerObj.isHost}👑{/if}
+									{playerObj.name}
+									{#if playerObj.name === username}(you){/if}
+									{playerObj.score}
 								</li>
 							{/each}
 						</div>
@@ -196,10 +236,11 @@
 			<ul id="playerList">
 				{#if lobbyDetails.players}
 					<div class="flex flex-col overflow-auto mx-4">
-						{#each lobbyDetails.players as playerName, i}
+						{#each lobbyDetails.players as playerObj, i}
 							<li class="border-b my-2 p-1">
-								{playerName}
-								{#if playerName === username}(you){/if}
+								{#if playerObj.isHost}👑{/if}
+								{playerObj.name}
+								{#if playerObj.name === username}(you){/if}
 							</li>
 						{/each}
 					</div>
@@ -207,7 +248,6 @@
 			</ul>
 		</div>
 	</div>
-
-{:else if currentScreen==='endGame'}
-<Winner/>
+{:else if currentScreen === 'endGame'}
+	<Winner />
 {/if}
